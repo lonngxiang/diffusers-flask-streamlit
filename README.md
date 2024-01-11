@@ -10,10 +10,10 @@ streamlit(streamlit_front.py): Serving as the frontend, it is the user-accessibl
 ## 2、Running steps
 
 1）run flask
-python flask_end.py
+```python flask_end.py```
 
 2）run streamlit
-streamlit run streamlit_front.py --server.address 1***4 --server.port 8555
+```streamlit run streamlit_front.py --server.address 1***4 --server.port 8555```
 
 ## 3、results
 
