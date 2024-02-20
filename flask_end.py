@@ -14,7 +14,8 @@ app = Flask(__name__)
 def load_model():
     if not hasattr(app, 'pipe'):
         torch.cuda.set_device(0)
-        app.pipe = PixArtAlphaPipeline.from_pretrained("PixArt-alpha/PixArt-XL-2-1024-MS", torch_dtype=torch.float16).to("cuda")
+        app.pipe = PixArtAlphaPipeline.from_pretrained("PixArt-alpha/PixArt-LCM-XL-2-1024-MS", torch_dtype=torch.float16)
+        #app.pipe = PixArtAlphaPipeline.from_pretrained("PixArt-alpha/PixArt-XL-2-1024-MS", torch_dtype=torch.float16)
         app.pipe.enable_model_cpu_offload()
 
 @app.route('/image', methods=['POST'])
@@ -22,7 +23,7 @@ def get_image():
     prompt = request.form.get('prompt')
     
     # 生成图像文件并创建PIL.Image.Image对象
-    image = app.pipe(prompt).images[0]
+    image = app.pipe(prompt, guidance_scale=0., num_inference_steps=24).images[0]
 
     # 将图像对象转换为字节流
     image_byte_array = image_to_byte_array(image)
