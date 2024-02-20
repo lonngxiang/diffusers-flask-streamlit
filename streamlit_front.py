@@ -22,7 +22,8 @@ def get_image(prompt):
 # 初始化变量
 if 'image1' not in st.session_state:
     st.session_state.image1 = None
-
+if 'prompt' not in st.session_state:
+    st.session_state.prompt = None
  
 
 if __name__ == '__main__':
@@ -30,11 +31,13 @@ if __name__ == '__main__':
 
     # 创建文本输入框
     prompt = st.text_input('请输入提示词，暂时只支持英文prompt')
+    # 将 prompt 存储在 st.session_state 中
+    st.session_state.prompt = prompt
     
     # 监听按钮点击事件
     if st.button("生成图像"):
         with st.spinner("正在生成图像..."):
             # 生成图像
-            st.session_state.image1 = get_image(prompt)
+            st.session_state.image1 = get_image(st.session_state.prompt)
         # 显示图像
         st.image(st.session_state.image1)
